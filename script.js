@@ -148,28 +148,21 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         const clientName = document.getElementById('client-name').value;
-        const paymentMethod = document.getElementById('payment-method').value;
+        const selectedNumber = document.getElementById('whatsapp-contact').value; // Pega o número escolhido
 
         if (!clientName) {
             alert("Por favor, digite seu nome.");
             return;
         }
 
-        if (paymentMethod === 'whatsapp') {
-            sendToWhatsApp(clientName);
-        } else {
-            alert("Método de pagamento em breve! Usando WhatsApp por padrão.");
-            sendToWhatsApp(clientName);
-        }
+        // Chama a função passando o nome E o número escolhido
+        sendToWhatsApp(clientName, selectedNumber);
     });
 
-    function sendToWhatsApp(name) {
-        // --- COLOQUE SEU NÚMERO AQUI (Ex: 5511999999999) ---
-        const phoneNumber = "551100000000"; 
-        
+    function sendToWhatsApp(name, phoneNumber) {
         let message = `*NOVO PEDIDO - MAGIAS DOCE ENCANTO* 🔮\n\n`;
         message += `*Cliente:* ${name}\n`;
-        message += `*Itens:*\n`;
+        message += `*Itens do Pedido:*\n`;
 
         let total = 0;
         cart.forEach(item => {
@@ -177,12 +170,18 @@ document.addEventListener('DOMContentLoaded', () => {
             total += item.price;
         });
 
-        message += `\n*TOTAL: R$ ${total.toFixed(2).replace('.', ',')}*\n`;
-        message += `\nAguardo instruções de pagamento (Pix/Link).`;
+        message += `\n*VALOR TOTAL DO CARRINHO: R$ ${total.toFixed(2).replace('.', ',')}*\n`;
+        
+        // Semântica ajustada conforme solicitado
+        message += `\n-----------------------------------\n`;
+        message += `*Informação de Pagamento:*\n`;
+        message += `Gostaria de combinar a forma de pagamento e entrega para finalizar este pedido.`;
 
         const encodedMessage = encodeURIComponent(message);
+        
+        // Usa o phoneNumber que veio do parâmetro (escolhido no select)
         const url = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
 
         window.open(url, '_blank');
     }
-});
+}); // Fim do DOMContentLoaded

@@ -55,6 +55,16 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
+    // --- 5. Popup de Manutenção ---
+    const maintenanceModal = document.getElementById('maintenance-modal');
+    const closeMaintenanceBtn = document.getElementById('close-maintenance');
+
+    if (closeMaintenanceBtn) {
+        closeMaintenanceBtn.addEventListener('click', () => {
+            maintenanceModal.classList.add('hidden');
+        });
+    }
+
     // --- 4. Sistema de Carrinho ---
     let cart = [];
     const modal = document.getElementById('cart-modal');

@@ -469,3 +469,37 @@ footer {
     color: #333;
     margin: 0 5px;
 }
+
+/* CSS: Adicionar ao final de style.css */
+
+/* Fundo escuro que cobre tudo */
+.maintenance-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background: rgba(5, 5, 5, 0.95); /* Quase preto total */
+    backdrop-filter: blur(10px);     /* Desfoque do fundo */
+    z-index: 9999;                   /* Fica acima de tudo */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    opacity: 1;
+    transition: opacity 0.5s ease;
+}
+
+/* Estilo específico do cartão de manutenção */
+.maintenance-card {
+    max-width: 500px;
+    width: 100%;
+    border: 1px solid var(--gold); /* Borda dourada para destaque */
+    box-shadow: 0 0 30px rgba(212, 175, 55, 0.2);
+}
+
+/* Classe utilitária para esconder o modal suavemente via JS */
+.maintenance-overlay.hidden {
+    opacity: 0;
+    pointer-events: none;
+}

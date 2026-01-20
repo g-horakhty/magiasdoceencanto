@@ -426,3 +426,46 @@ footer {
     .menu-toggle { display: block; }
     .hero h1 { font-size: 2.5rem; }
 }
+
+/* --- Estilos Melhorados do Rodapé --- */
+
+/* Área de Dados Legais */
+.footer-legal {
+    margin: 25px auto;
+    padding: 20px 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    font-size: 0.85rem;
+    color: #aaa;
+    line-height: 1.8;
+    max-width: 600px; /* Limita a largura para não ficar muito esticado */
+}
+
+/* Área dos Créditos (Dev) */
+.footer-credits {
+    font-size: 0.75rem;
+    text-transform: uppercase; /* Letras maiúsculas para elegância */
+    letter-spacing: 2px;       /* Espaçamento entre letras */
+    color: #555;
+    margin-top: 30px;
+}
+
+/* Links do Desenvolvedor */
+.developer-link {
+    color: var(--purple-primary);
+    text-decoration: none;
+    font-weight: 700;
+    transition: all 0.3s ease;
+    padding: 0 5px;
+}
+
+.developer-link:hover {
+    color: var(--gold);
+    text-shadow: 0 0 10px rgba(212, 175, 55, 0.8); /* Brilho dourado ao passar o mouse */
+}
+
+/* A barrinha separadora | */
+.separator {
+    color: #333;
+    margin: 0 5px;
+}

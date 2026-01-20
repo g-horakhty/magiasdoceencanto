@@ -1018,3 +1018,11 @@ footer {
     box-shadow: 0 4px 15px rgba(0,0,0,0.3);
     border: 1px solid rgba(255, 255, 255, 0.1);
 }
+
+/* --- Estilo da Logo PNG --- */
+.logo-img {
+    height: 50px; /* Ajuste a altura conforme o tamanho da sua barra */
+    width: auto;  /* Mantém a proporção correta */
+    object-fit: contain;
+    border-radius: 5px; /* Deixa os cantos levemente arredondados, se quiser */
+}

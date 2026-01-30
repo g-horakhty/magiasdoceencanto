@@ -482,7 +482,7 @@ footer {
     margin: 0 5px;
 }
 
-/* --- Modal de Manutenção / Agenda Aberta (Com Rolagem Independente) --- */
+/* --- Modal de Manutenção / Agenda Aberta (Rolagem Corrigida) --- */
 .maintenance-overlay {
     position: fixed;
     top: 0;
@@ -495,12 +495,13 @@ footer {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 20px;
+    padding: 15px; /* Margem pequena no mobile */
     opacity: 1;
     transition: opacity 0.5s ease;
 }
 
 .maintenance-card {
+    /* Estilos do Vidro (Glassmorphism) incorporados diretamente */
     background: #0a0a0a;
     border: 1px solid var(--gold);
     box-shadow: 0 0 30px rgba(212, 175, 55, 0.2);
@@ -508,18 +509,20 @@ footer {
     padding: 20px;
     text-align: center;
     
-    /* Configuração da rolagem interna */
+    /* Configuração da rolagem */
     width: 100%;
-    max-width: 500px;
-    max-height: 85vh; /* Limita a altura a 85% da tela */
-    overflow-y: auto; /* Cria barra de rolagem se o conteúdo passar */
+    max-width: 500px; /* Largura máxima no PC */
+    
+    /* Altura máxima segura para celulares (evita cortar em cima/embaixo) */
+    max-height: 80vh; 
+    overflow-y: auto; /* Habilita rolagem interna */
     
     /* Estilização da barra de rolagem */
     scrollbar-width: thin;
     scrollbar-color: var(--purple-primary) #0a0a0a;
 }
 
-/* Personalização da Scrollbar (Webkit/Chrome) */
+/* Scrollbar Customizada (Webkit) */
 .maintenance-card::-webkit-scrollbar {
     width: 8px;
 }
@@ -532,16 +535,17 @@ footer {
 }
 
 .maintenance-card img {
-    width: 100%;
+    /* Garante que a imagem use 100% da largura do card, mas sem estourar */
+    width: 100%; 
     height: auto;
     object-fit: contain;
     margin-bottom: 20px;
     border-radius: 8px;
     display: block;
-    /* max-height removido para mostrar imagem inteira */
+    /* Sem limite de altura para mostrar imagem completa na rolagem */
 }
 
-/* Quando escondido */
+/* Esconde o modal suavemente e libera o clique atrás */
 .maintenance-overlay.hidden {
     opacity: 0;
     pointer-events: none;

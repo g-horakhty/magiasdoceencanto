@@ -5,7 +5,7 @@
 
 document.addEventListener("DOMContentLoaded", () => {
     
-    // --- 1. Lógica do Modal de "Agenda Aberta" ---
+    // --- 1. Modal de Manutenção / Agenda Aberta ---
     const maintenanceModal = document.getElementById("maintenance-modal");
     const closeMaintBtn = document.getElementById("close-maintenance");
 
@@ -13,10 +13,7 @@ document.addEventListener("DOMContentLoaded", () => {
         closeMaintBtn.addEventListener("click", (e) => {
             e.preventDefault(); 
             maintenanceModal.classList.add("hidden");
-            
-            setTimeout(() => {
-                maintenanceModal.style.display = "none";
-            }, 500);
+            setTimeout(() => { maintenanceModal.style.display = "none"; }, 500);
         });
     }
 
@@ -54,26 +51,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let cart = [];
 
-    // Abrir Carrinho
+    // Abrir/Fechar
     if(cartBtn && cartModal) {
-        cartBtn.addEventListener("click", () => {
-            cartModal.classList.add("open");
-            renderCart();
-        });
+        cartBtn.addEventListener("click", () => { cartModal.classList.add("open"); renderCart(); });
     }
-
-    // Fechar Carrinho
     if(closeCartBtn && cartModal) {
-        closeCartBtn.addEventListener("click", () => {
-            cartModal.classList.remove("open");
-        });
+        closeCartBtn.addEventListener("click", () => { cartModal.classList.remove("open"); });
     }
-
     if(cartModal) {
         cartModal.addEventListener("click", (e) => {
-            if (e.target === cartModal) {
-                cartModal.classList.remove("open");
-            }
+            if (e.target === cartModal) cartModal.classList.remove("open");
         });
     }
 
@@ -82,12 +69,13 @@ document.addEventListener("DOMContentLoaded", () => {
     addButtons.forEach(button => {
         button.addEventListener("click", (e) => {
             e.preventDefault();
-            const nome = button.getAttribute('data-name');
-            const preco = parseFloat(button.getAttribute('data-price'));
+            // PADRONIZAÇÃO: Usando 'name' e 'price' igual ao HTML
+            const name = button.getAttribute('data-name');
+            const price = parseFloat(button.getAttribute('data-price'));
 
-            addToCart(nome, preco);
+            addToCart(name, price);
             
-            // Efeito visual no botão
+            // Feedback Visual
             const originalText = button.innerText;
             button.innerText = "Adicionado!";
             button.style.background = "#7b2cbf";
@@ -98,25 +86,25 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
-    function addToCart(nome, preco) {
-        const existingItem = cart.find(item => item.nome === nome);
+    function addToCart(name, price) {
+        const existingItem = cart.find(item => item.name === name);
         if (existingItem) {
-            existingItem.quantidade += 1;
+            existingItem.quantity += 1;
         } else {
-            // AQUI ESTÁ O SEGREDO: salvamos como 'preco'
-            cart.push({ nome, preco, quantidade: 1 });
+            // AQUI ESTAVA O ERRO: Agora salvamos como 'price' e 'name'
+            cart.push({ name: name, price: price, quantity: 1 });
         }
         updateCartCount();
     }
 
-    function removeFromCart(nome) {
-        cart = cart.filter(item => item.nome !== nome);
+    function removeFromCart(name) {
+        cart = cart.filter(item => item.name !== name);
         renderCart();
         updateCartCount();
     }
 
     function updateCartCount() {
-        const totalItems = cart.reduce((acc, item) => acc + item.quantidade, 0);
+        const totalItems = cart.reduce((acc, item) => acc + item.quantity, 0);
         if(cartCount) cartCount.innerText = totalItems;
     }
 
@@ -130,18 +118,17 @@ document.addEventListener("DOMContentLoaded", () => {
             cartItemsContainer.innerHTML = "<p style='color:#ccc; text-align:center;'>Seu carrinho está vazio.</p>";
         } else {
             cart.forEach(item => {
-                // Aqui usamos 'item.preco' corretamente
-                const itemTotal = item.preco * item.quantidade;
+                const itemTotal = item.price * item.quantity;
                 total += itemTotal;
                 
                 const itemElement = document.createElement("div");
                 itemElement.classList.add("cart-item");
                 itemElement.innerHTML = `
                     <div class="item-info">
-                        <h4>${item.nome} (${item.quantidade}x)</h4>
+                        <h4>${item.name} (${item.quantity}x)</h4>
                         <span>R$ ${itemTotal.toFixed(2).replace(".", ",")}</span>
                     </div>
-                    <button class="remove-item" onclick="removeHandler('${item.nome}')">
+                    <button class="remove-item" onclick="removeHandler('${item.name}')">
                         <i class="ph-fill ph-trash"></i>
                     </button>
                 `;
@@ -152,12 +139,12 @@ document.addEventListener("DOMContentLoaded", () => {
         if(cartTotalElement) cartTotalElement.innerText = `R$ ${total.toFixed(2).replace(".", ",")}`;
     }
 
-    // Função Global para o botão de remover funcionar
-    window.removeHandler = function(nome) {
-        removeFromCart(nome);
+    // Função Global
+    window.removeHandler = function(name) {
+        removeFromCart(name);
     };
 
-    // --- 4. Checkout e Envio para WhatsApp (CORRIGIDO) ---
+    // --- 4. Checkout (WhatsApp) ---
     if (checkoutBtn) {
         checkoutBtn.addEventListener('click', (e) => {
             e.preventDefault();
@@ -171,13 +158,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const clientName = clientNameInput ? clientNameInput.value : "";
             
             const contactSelect = document.getElementById('whatsapp-contact');
-            let selectedNumber = "";
-
-            if (contactSelect && contactSelect.value) {
-                selectedNumber = contactSelect.value.replace(/\D/g, '');
-            } else {
-                selectedNumber = "5514997143768"; 
-            }
+            let selectedNumber = contactSelect && contactSelect.value ? contactSelect.value.replace(/\D/g, '') : "5514997143768";
 
             if (!clientName) {
                 alert("Por favor, digite seu nome.");
@@ -195,12 +176,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
         let total = 0;
         cart.forEach(item => {
-            const quantidade = item.quantidade || 1;
+            // CORREÇÃO DEFINITIVA: Usando item.price e item.quantity
+            const subtotal = item.price * item.quantity;
             
-            // CORREÇÃO: Mudado de item.price para item.preco
-            const subtotal = item.preco * quantidade;
-            
-            message += `- ${quantidade}x ${item.nome}: R$ ${subtotal.toFixed(2).replace('.', ',')}\n`;
+            message += `- ${item.quantity}x ${item.name}: R$ ${subtotal.toFixed(2).replace('.', ',')}\n`;
             total += subtotal;
         });
 
@@ -210,13 +189,12 @@ document.addEventListener("DOMContentLoaded", () => {
         message += `Gostaria de combinar a forma de pagamento e entrega.`;
 
         const encodedMessage = encodeURIComponent(message);
-        
         const url = `https://api.whatsapp.com/send?phone=${phoneNumber}&text=${encodedMessage}`;
 
         window.open(url, '_blank');
     }
 
-    // --- 5. Animação de Scroll (Reveal) ---
+    // --- 5. Scroll Reveal ---
     const revealOnScroll = () => {
         const reveals = document.querySelectorAll('.reveal');
         const windowHeight = window.innerHeight;
@@ -229,7 +207,6 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         });
     };
-
     window.addEventListener('scroll', revealOnScroll);
     revealOnScroll();
 });

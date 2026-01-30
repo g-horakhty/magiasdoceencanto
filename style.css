@@ -482,20 +482,20 @@ footer {
     margin: 0 5px;
 }
 
-/* --- Modal de Manutenção / Agenda Aberta (Responsivo) --- */
+/* --- Modal de Manutenção / Agenda Aberta (Corrigido para Celular) --- */
 .maintenance-overlay {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
-    height: 100%; /* Ocupa tela toda */
+    height: 100vh;
     background: rgba(5, 5, 5, 0.95);
     backdrop-filter: blur(10px);
     z-index: 9999;
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 20px; /* Espaço nas bordas */
+    padding: 15px; /* Reduzi a margem externa para aproveitar mais a tela */
     opacity: 1;
     transition: opacity 0.5s ease;
 }
@@ -505,32 +505,32 @@ footer {
     border: 1px solid var(--gold);
     box-shadow: 0 0 30px rgba(212, 175, 55, 0.2);
     border-radius: 15px;
-    padding: 30px;
+    padding: 20px; /* Reduzi de 30px para 20px para ganhar espaço no celular */
     text-align: center;
     
-    /* Configurações de Responsividade */
-    width: 100%;
-    max-width: 450px;
-    max-height: 90vh; /* Máximo 90% da altura da tela */
-    overflow-y: auto; /* Rolagem interna se for muito alto */
+    /* Tamanho inteligente */
+    width: 95%; /* Ocupa quase toda a largura do celular */
+    max-width: 450px; /* Mas não fica gigante no PC */
+    max-height: 90vh; 
+    overflow-y: auto; 
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
 .maintenance-card img {
-    max-width: 100%;
+    width: 100%; /* Garante que a imagem use a largura disponível do card */
     height: auto;
-    max-height: 250px; /* Limita altura da imagem */
-    object-fit: contain;
+    max-height: 250px;
+    object-fit: cover; /* Ajuste para preencher melhor */
     margin-bottom: 20px;
     border-radius: 8px;
 }
 
-/* Quando escondido */
+/* Esconde o modal suavemente e permite clicar no site atrás */
 .maintenance-overlay.hidden {
     opacity: 0;
-    pointer-events: none; /* Permite clicar no site atrás */
+    pointer-events: none;
 }
 
 /* --- Mobile --- */

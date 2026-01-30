@@ -482,7 +482,7 @@ footer {
     margin: 0 5px;
 }
 
-/* --- Modal de Manutenção / Agenda Aberta (Corrigido para Celular) --- */
+/* --- Modal de Manutenção / Agenda Aberta (Responsivo) --- */
 .maintenance-overlay {
     position: fixed;
     top: 0;
@@ -495,7 +495,7 @@ footer {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 15px; /* Reduzi a margem externa para aproveitar mais a tela */
+    padding: 15px; /* Margem reduzida para ganhar espaço no mobile */
     opacity: 1;
     transition: opacity 0.5s ease;
 }
@@ -505,29 +505,29 @@ footer {
     border: 1px solid var(--gold);
     box-shadow: 0 0 30px rgba(212, 175, 55, 0.2);
     border-radius: 15px;
-    padding: 20px; /* Reduzi de 30px para 20px para ganhar espaço no celular */
+    padding: 20px;
     text-align: center;
     
-    /* Tamanho inteligente */
-    width: 95%; /* Ocupa quase toda a largura do celular */
-    max-width: 450px; /* Mas não fica gigante no PC */
+    /* SEGREDOS DA RESPONSIVIDADE */
+    width: 95%; /* Quase largura total no celular */
+    max-width: 450px; /* Limite no PC */
     max-height: 90vh; 
-    overflow-y: auto; 
+    overflow-y: auto; /* Scroll interno se a tela for muito pequena */
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
 .maintenance-card img {
-    width: 100%; /* Garante que a imagem use a largura disponível do card */
+    width: 100%;
     height: auto;
-    max-height: 250px;
-    object-fit: cover; /* Ajuste para preencher melhor */
+    max-height: 250px; 
+    object-fit: cover;
     margin-bottom: 20px;
     border-radius: 8px;
 }
 
-/* Esconde o modal suavemente e permite clicar no site atrás */
+/* Esconde o modal suavemente e libera o clique atrás */
 .maintenance-overlay.hidden {
     opacity: 0;
     pointer-events: none;

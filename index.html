@@ -130,7 +130,7 @@
                 <div class="grid-container" style="justify-content: center;">
                     
                     <div class="glass-card reveal">
-                        <video class="card-img" autoplay muted loop playsinline>
+                        <video class="card-img" autoplay muted loop playsinline poster="imagens/agenda-aberta.jpg">
                             <source src="videos/ritual.mp4" type="video/mp4">
                             Seu navegador não suporta a tag de vídeo.
                         </video>
@@ -139,7 +139,7 @@
                         <span class="price" style="font-size: 1rem; color: #ccc;">Sob Consulta</span>
                         
                         <div style="display: flex; flex-direction: column; gap: 10px; margin-top: 15px;">
-                            <a href="https://wa.me/5514997143768?text=Olá, gostaria de fazer uma cotação para a Análise de Ritual." 
+                            <a href="https://api.whatsapp.com/send?phone=5514997143768&text=Olá, gostaria de fazer uma cotação para a Análise de Ritual." 
                                target="_blank" 
                                class="btn-card" 
                                style="background-color: #25D366; border: none; display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%;">
@@ -147,7 +147,7 @@
                                 Cotação (Opção 1)
                             </a>
 
-                            <a href="https://wa.me/5514998068523?text=Olá, gostaria de fazer uma cotação para a Análise de Ritual." 
+                            <a href="https://api.whatsapp.com/send?phone=5514998068523&text=Olá, gostaria de fazer uma cotação para a Análise de Ritual." 
                                target="_blank" 
                                class="btn-card" 
                                style="background-color: #128C7E; border: none; display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%;">
@@ -237,24 +237,39 @@
                 </div>
                 
                 <div class="checkout-form">
-    <input type="text" id="client-name" placeholder="Seu Nome Completo" required>
-    
-    <label style="color: #aaa; font-size: 0.9rem; margin-top: 10px; display: block;">Falar com:</label>
-    <select id="whatsapp-contact" style="margin-bottom: 10px;">
-        <option value="5514997143768">Atendimento 1 - (14) 99714-3768</option>
-        <option value="5514998068523">Atendimento 2 - (14) 99806-8523</option>
-    </select>
+                    <input type="text" id="client-name" placeholder="Seu Nome Completo" required>
+                    
+                    <label style="color: #aaa; font-size: 0.9rem; margin-top: 10px; display: block;">Falar com:</label>
+                    <select id="whatsapp-contact" style="margin-bottom: 10px;">
+                        <option value="5514997143768">Atendimento 1 - (14) 99714-3768</option>
+                        <option value="5514998068523">Atendimento 2 - (14) 99806-8523</option>
+                    </select>
 
-    <label style="color: #aaa; font-size: 0.9rem;">Forma de Pagamento:</label>
-    <select id="payment-method">
-        <option value="whatsapp">Combinar no WhatsApp</option>
-    </select>
-</div>
+                    <label style="color: #aaa; font-size: 0.9rem;">Forma de Pagamento:</label>
+                    <select id="payment-method">
+                        <option value="whatsapp">Combinar no WhatsApp</option>
+                    </select>
+                </div>
 
                 <button id="checkout-btn" class="btn btn-primary" style="width: 100%; margin-top: 15px;">
                     Finalizar Pedido
                 </button>
             </div>
+        </div>
+    </div>
+
+    <div id="maintenance-modal" class="maintenance-overlay">
+        <div class="glass-card maintenance-card">
+            <img src="imagens/agenda-aberta.jpg" alt="Agenda Aberta">
+            
+            <h2 style="color: var(--gold); margin-bottom: 10px; font-size: 1.8rem;">Agenda Aberta</h2>
+            <p style="margin-bottom: 20px; color: #ccc;">
+                Seja bem-vindo(a)! Nossos serviços e produtos já estão disponíveis.
+            </p>
+
+            <button id="close-maintenance" class="btn btn-primary" style="width: 100%; font-size: 1.1rem;">
+                Acessar Loja
+            </button>
         </div>
     </div>
 
@@ -284,31 +299,5 @@
         </div>
     </footer>
     <script src="script.js"></script>
-    
-    <!-- Caso precise ativar a manutenção só apagar a tag de comentario 
-    <div id="maintenance-modal" class="maintenance-overlay">
-        <div class="glass-card maintenance-card">
-            <div class="icon-box">
-                <i class="ph-fill ph-hourglass-high"></i>
-            </div>
-            <h2 style="color: var(--gold); margin-bottom: 15px;">Em Breve</h2>
-            <p style="font-size: 1.1rem; line-height: 1.6;">
-                Um mundo para unir o conhecimento ancestral com a necessidade moderna de cura e direcionamento.
-            </p>
-            <button id="close-maintenance" class="btn btn-primary" style="margin-top: 25px;">
-                Acessar Versão Alpha
-            </button>
-        </div>
-    </div> -->
-   <div id="maintenance-modal" class="maintenance-overlay">
-    <div class="maintenance-card glass-card">
-        <img src="imagens/agenda-aberta.jpg" alt="Agenda Aberta" style="width:100%; border-radius:10px; margin-bottom:20px;">
-        
-        <h2 style="color: var(--gold); margin-bottom: 15px;">Bem-vindos!</h2>
-        <p style="margin-bottom: 20px;">Nossa agenda para rituais e consultas está oficialmente aberta.</p>
-        
-        <button id="enter-site" class="btn btn-primary">Acessar Loja</button>
-    </div>
-</div>
 </body>
 </html>

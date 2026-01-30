@@ -12,10 +12,8 @@ document.addEventListener("DOMContentLoaded", () => {
     if (maintenanceModal && closeMaintBtn) {
         closeMaintBtn.addEventListener("click", (e) => {
             e.preventDefault(); 
-            // Adiciona a classe que deixa transparente e permite clique atrás (pointer-events: none)
             maintenanceModal.classList.add("hidden");
             
-            // Remove o elemento da tela após a transição visual
             setTimeout(() => {
                 maintenanceModal.style.display = "none";
             }, 500);
@@ -105,6 +103,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (existingItem) {
             existingItem.quantidade += 1;
         } else {
+            // AQUI ESTÁ O SEGREDO: salvamos como 'preco'
             cart.push({ nome, preco, quantidade: 1 });
         }
         updateCartCount();
@@ -131,6 +130,7 @@ document.addEventListener("DOMContentLoaded", () => {
             cartItemsContainer.innerHTML = "<p style='color:#ccc; text-align:center;'>Seu carrinho está vazio.</p>";
         } else {
             cart.forEach(item => {
+                // Aqui usamos 'item.preco' corretamente
                 const itemTotal = item.preco * item.quantidade;
                 total += itemTotal;
                 
@@ -157,7 +157,7 @@ document.addEventListener("DOMContentLoaded", () => {
         removeFromCart(nome);
     };
 
-    // --- 4. Checkout e Envio para WhatsApp ---
+    // --- 4. Checkout e Envio para WhatsApp (CORRIGIDO) ---
     if (checkoutBtn) {
         checkoutBtn.addEventListener('click', (e) => {
             e.preventDefault();
@@ -170,14 +170,12 @@ document.addEventListener("DOMContentLoaded", () => {
             const clientNameInput = document.getElementById('client-name');
             const clientName = clientNameInput ? clientNameInput.value : "";
             
-            // Pega o número escolhido e limpa caracteres estranhos
             const contactSelect = document.getElementById('whatsapp-contact');
             let selectedNumber = "";
 
             if (contactSelect && contactSelect.value) {
                 selectedNumber = contactSelect.value.replace(/\D/g, '');
             } else {
-                // Fallback de segurança
                 selectedNumber = "5514997143768"; 
             }
 
@@ -198,7 +196,10 @@ document.addEventListener("DOMContentLoaded", () => {
         let total = 0;
         cart.forEach(item => {
             const quantidade = item.quantidade || 1;
-            const subtotal = item.price * quantidade;
+            
+            // CORREÇÃO: Mudado de item.price para item.preco
+            const subtotal = item.preco * quantidade;
+            
             message += `- ${quantidade}x ${item.nome}: R$ ${subtotal.toFixed(2).replace('.', ',')}\n`;
             total += subtotal;
         });
@@ -210,7 +211,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const encodedMessage = encodeURIComponent(message);
         
-        // Uso da API robusta do WhatsApp para evitar erros
         const url = `https://api.whatsapp.com/send?phone=${phoneNumber}&text=${encodedMessage}`;
 
         window.open(url, '_blank');

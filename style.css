@@ -482,7 +482,7 @@ footer {
     margin: 0 5px;
 }
 
-/* --- Modal de Manutenção / Agenda Aberta (Responsivo) --- */
+/* --- Modal de Manutenção / Agenda Aberta (Com Rolagem Independente) --- */
 .maintenance-overlay {
     position: fixed;
     top: 0;
@@ -495,7 +495,7 @@ footer {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 15px; /* Margem reduzida para ganhar espaço no mobile */
+    padding: 20px;
     opacity: 1;
     transition: opacity 0.5s ease;
 }
@@ -508,26 +508,40 @@ footer {
     padding: 20px;
     text-align: center;
     
-    /* SEGREDOS DA RESPONSIVIDADE */
-    width: 95%; /* Quase largura total no celular */
-    max-width: 450px; /* Limite no PC */
-    max-height: 90vh; 
-    overflow-y: auto; /* Scroll interno se a tela for muito pequena */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    /* Configuração da rolagem interna */
+    width: 100%;
+    max-width: 500px;
+    max-height: 85vh; /* Limita a altura a 85% da tela */
+    overflow-y: auto; /* Cria barra de rolagem se o conteúdo passar */
+    
+    /* Estilização da barra de rolagem */
+    scrollbar-width: thin;
+    scrollbar-color: var(--purple-primary) #0a0a0a;
+}
+
+/* Personalização da Scrollbar (Webkit/Chrome) */
+.maintenance-card::-webkit-scrollbar {
+    width: 8px;
+}
+.maintenance-card::-webkit-scrollbar-track {
+    background: #0a0a0a;
+}
+.maintenance-card::-webkit-scrollbar-thumb {
+    background-color: var(--purple-primary);
+    border-radius: 4px;
 }
 
 .maintenance-card img {
     width: 100%;
     height: auto;
-    max-height: 250px; 
-    object-fit: cover;
+    object-fit: contain;
     margin-bottom: 20px;
     border-radius: 8px;
+    display: block;
+    /* max-height removido para mostrar imagem inteira */
 }
 
-/* Esconde o modal suavemente e libera o clique atrás */
+/* Quando escondido */
 .maintenance-overlay.hidden {
     opacity: 0;
     pointer-events: none;
